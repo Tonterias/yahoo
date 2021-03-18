@@ -50,6 +50,8 @@ public class CacheConfiguration {
             createCache(cm, com.yahoo.quotes.domain.User.class.getName() + ".authorities");
             createCache(cm, com.yahoo.quotes.domain.PersistentToken.class.getName());
             createCache(cm, com.yahoo.quotes.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, com.yahoo.quotes.domain.Stock.class.getName());
+            createCache(cm, com.yahoo.quotes.domain.Quote.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

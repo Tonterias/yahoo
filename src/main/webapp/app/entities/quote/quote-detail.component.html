@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="quote">
+            <h2><span jhiTranslate="yahooApp.quote.detail.title">Quote</span> {{ quote.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="yahooApp.quote.symbol">Symbol</span></dt>
+                <dd>
+                    <span>{{ quote.symbol }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.date">Date</span></dt>
+                <dd>
+                    <span>{{ quote.date }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.open">Open</span></dt>
+                <dd>
+                    <span>{{ quote.open }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.high">High</span></dt>
+                <dd>
+                    <span>{{ quote.high }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.low">Low</span></dt>
+                <dd>
+                    <span>{{ quote.low }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.close">Close</span></dt>
+                <dd>
+                    <span>{{ quote.close }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.adjclose">Adjclose</span></dt>
+                <dd>
+                    <span>{{ quote.adjclose }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.volume">Volume</span></dt>
+                <dd>
+                    <span>{{ quote.volume }}</span>
+                </dd>
+                <dt><span jhiTranslate="yahooApp.quote.stock">Stock</span></dt>
+                <dd>
+                    <div *ngIf="quote.stockId">
+                        <a [routerLink]="['/stock', quote.stockId, 'view']">{{ quote.stockName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/quote', quote.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
