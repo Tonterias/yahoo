@@ -48,7 +48,9 @@ public class StockResource {
      * {@code POST  /stocks} : Create a new stock.
      *
      * @param stockDTO the stockDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new stockDTO, or with status {@code 400 (Bad Request)} if the stock has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new stockDTO, or with status {@code 400 (Bad Request)} if
+     *         the stock has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/stocks")
@@ -58,18 +60,21 @@ public class StockResource {
             throw new BadRequestAlertException("A new stock cannot already have an ID", ENTITY_NAME, "idexists");
         }
         StockDTO result = stockService.save(stockDTO);
-        return ResponseEntity.created(new URI("/api/stocks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity
+                .created(new URI("/api/stocks/" + result.getId())).headers(HeaderUtil
+                        .createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code PUT  /stocks} : Updates an existing stock.
      *
      * @param stockDTO the stockDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated stockDTO,
-     * or with status {@code 400 (Bad Request)} if the stockDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the stockDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated stockDTO, or with status {@code 400 (Bad Request)} if the
+     *         stockDTO is not valid, or with status
+     *         {@code 500 (Internal Server Error)} if the stockDTO couldn't be
+     *         updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/stocks")
@@ -79,22 +84,24 @@ public class StockResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         StockDTO result = stockService.save(stockDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, stockDTO.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(
+                HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, stockDTO.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code GET  /stocks} : get all the stocks.
      *
      * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of stocks in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of stocks in body.
      */
     @GetMapping("/stocks")
     public ResponseEntity<List<StockDTO>> getAllStocks(Pageable pageable) {
         log.debug("REST request to get a page of Stocks");
         Page<StockDTO> page = stockService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil
+                .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -102,7 +109,8 @@ public class StockResource {
      * {@code GET  /stocks/:id} : get the "id" stock.
      *
      * @param id the id of the stockDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the stockDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the stockDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/stocks/{id}")
     public ResponseEntity<StockDTO> getStock(@PathVariable Long id) {
@@ -112,15 +120,32 @@ public class StockResource {
     }
 
     /**
+     * {@code GET  /stockquotes/:id} : get the "id" stock.
+     *
+     * @param id the id of the stockDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the stockDTO, or with status {@code 404 (Not Found)}.
+     */
+    // @GetMapping("/stockquotes/{id}")
+    // public ResponseEntity<StockDTO> getStockQuotes(@PathVariable Long id) {
+    //     log.debug("REST request to get Stock : {}", id);
+    //     Optional<StockDTO> stockDTO = stockService.findOne(id);
+
+    //     return ResponseUtil.wrapOrNotFound(stockDTO);
+    // }
+
+    /**
      * {@code DELETE  /stocks/:id} : delete the "id" stock.
      *
      * @param id the id of the stockDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/stocks/{id}")
+    @DeleteMapping("/stockqs/{id}")
     public ResponseEntity<Void> deleteStock(@PathVariable Long id) {
         log.debug("REST request to delete Stock : {}", id);
         stockService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+                .build();
     }
 }

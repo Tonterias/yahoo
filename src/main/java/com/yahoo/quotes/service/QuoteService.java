@@ -54,10 +54,8 @@ public class QuoteService {
     @Transactional(readOnly = true)
     public Page<QuoteDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Quotes");
-        return quoteRepository.findAll(pageable)
-            .map(quoteMapper::toDto);
+        return quoteRepository.findAll(pageable).map(quoteMapper::toDto);
     }
-
 
     /**
      * Get one quote by id.
@@ -68,9 +66,19 @@ public class QuoteService {
     @Transactional(readOnly = true)
     public Optional<QuoteDTO> findOne(Long id) {
         log.debug("Request to get Quote : {}", id);
-        return quoteRepository.findById(id)
-            .map(quoteMapper::toDto);
+        return quoteRepository.findById(id).map(quoteMapper::toDto);
     }
+
+    /**
+     * TO_DO: CREAR la entrada para hacer la llamada a Yahoo y que pida las
+     * cotizaciones de un valor!!
+     */
+    // @Transactional(readOnly = true)
+    // public Optional<QuoteDTO> getQuotes(Long id) {
+    //     log.debug("Request to get Quote : {}", id);
+    //     Optional<QuoteDTO> quoteDTO = quoteRepository.findById(id).map(quoteMapper::toDto);
+    //     return quoteRepository.findById(id).map(quoteMapper::toDto);
+    // }
 
     /**
      * Delete the quote by id.

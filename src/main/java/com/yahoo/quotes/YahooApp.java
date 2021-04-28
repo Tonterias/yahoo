@@ -2,6 +2,9 @@ package com.yahoo.quotes;
 
 import com.yahoo.quotes.config.ApplicationProperties;
 
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+
 import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
 
@@ -15,6 +18,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -28,9 +33,16 @@ public class YahooApp {
 
     private final Environment env;
 
+    public Stock getStock(String stockName) throws IOException {
+        return YahooFinance.get(stockName);
+    }
+
     public YahooApp(Environment env) {
         this.env = env;
     }
+
+    // public YahooApp() {
+    // }
 
     /**
      * Initializes yahoo.
@@ -56,12 +68,17 @@ public class YahooApp {
      * Main method, used to run the application.
      *
      * @param args the command line arguments.
+     * @throws IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SpringApplication app = new SpringApplication(YahooApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);
+        /** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! AQUI METO CODIGO MIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+        // YahooApp yahooStockAPI = new YahooApp(env);
+        // System.out.println(yahooStockAPI.getStock("GOOG"));
+        /** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! AQUI METO CODIGO MIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
     }
 
     private static void logApplicationStartup(Environment env) {

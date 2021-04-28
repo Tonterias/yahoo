@@ -54,10 +54,8 @@ public class StockService {
     @Transactional(readOnly = true)
     public Page<StockDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Stocks");
-        return stockRepository.findAll(pageable)
-            .map(stockMapper::toDto);
+        return stockRepository.findAll(pageable).map(stockMapper::toDto);
     }
-
 
     /**
      * Get one stock by id.
@@ -68,9 +66,18 @@ public class StockService {
     @Transactional(readOnly = true)
     public Optional<StockDTO> findOne(Long id) {
         log.debug("Request to get Stock : {}", id);
-        return stockRepository.findById(id)
-            .map(stockMapper::toDto);
+        return stockRepository.findById(id).map(stockMapper::toDto);
     }
+
+    /**
+     * TO_DO: CREAR la entrada para hacer la llamada a Yahoo y que pida las
+     * cotizaciones de un valor!!
+     */
+    // @Transactional(readOnly = true)
+    // public Optional<StockDTO> getQuotes(Long id) {
+    //     log.debug("Request to get Stock : {}", id);
+    //     return stockRepository.findById(id).map(stockMapper::toDto);
+    // }
 
     /**
      * Delete the stock by id.
